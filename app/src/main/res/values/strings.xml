@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_text">TextActivity</string>
+    <string name="title_activity_text_field">TextFieldActivity</string>
+    <string name="title_activity_button">ButtonActivity</string>
+    <string name="title_activity_row_column">RowColumnActivity</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_login_screen">LoginScreenActivity</string>
+    <string name="title_activity_card">CardActivity</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="title_activity_draggable">DraggableActivity</string>
+    <string name="title_activity_lazy_horizontal_and_vertical">LazyHorizontalAndVerticalActivity
+    </string>
+    <string name="title_activity_view_pager">ViewPagerActivity</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_dialog">DialogActivity</string>
+</resources>
