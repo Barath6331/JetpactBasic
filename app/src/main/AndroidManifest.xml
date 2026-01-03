@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication">
+        <activity
+            android:name=".dialog.DialogActivity"
+            android:exported="true"
+            android:label="@string/title_activity_dialog"
+            android:theme="@style/Theme.MyApplication">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NavigationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.MyApplication">
+
+        </activity>
+        <activity
+            android:name=".ViewPagerActivity"
+            android:exported="true"
+            android:label="@string/title_activity_view_pager"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".LazyHorizontalAndVerticalActivity"
+            android:exported="true"
+            android:label="@string/title_activity_lazy_horizontal_and_vertical"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".DraggableActivity"
+            android:exported="true"
+            android:label="@string/title_activity_draggable"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true"
+            android:label="@string/title_activity_card"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".CardActivity"
+            android:exported="true"
+            android:label="@string/title_activity_card"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".LoginScreenActivity"
+            android:exported="true"
+            android:label="@string/title_activity_login_screen"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".ModifierActivity"
+            android:exported="true"
+            android:label="@string/title_activity_image"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".RowColumnActivity"
+            android:exported="true"
+            android:label="@string/title_activity_row_column"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".ButtonActivity"
+            android:exported="true"
+            android:label="@string/title_activity_button"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".TextFieldActivity"
+            android:exported="true"
+            android:label="@string/title_activity_text_field"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".TextActivity"
+            android:exported="true"
+            android:label="@string/title_activity_text"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyApplication" />
+    </application>
+
+</manifest>
