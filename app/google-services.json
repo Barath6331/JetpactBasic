@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "909895008269",
+    "project_id": "se-app-android-3759b",
+    "storage_bucket": "se-app-android-3759b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909895008269:android:6837d81f18e03609ffd544",
+        "android_client_info": {
+          "package_name": "com.centuryproclub.se.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkSmVCezvFJ58O9-5U2iYepJd4pxWenD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909895008269:android:69ae4ebc30897be5ffd544",
+        "android_client_info": {
+          "package_name": "com.loyltworks.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkSmVCezvFJ58O9-5U2iYepJd4pxWenD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
