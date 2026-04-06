@@ -14,4 +14,6 @@
     <string name="title_activity_view_pager">ViewPagerActivity</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_dialog">DialogActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_navigation2">Navigation2Activity</string>
 </resources>
