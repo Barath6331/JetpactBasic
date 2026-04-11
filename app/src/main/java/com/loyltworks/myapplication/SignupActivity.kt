@@ -1,3 +1,5 @@
+
+
 package com.loyltworks.myapplication
 
 import android.os.Bundle
@@ -5,537 +7,218 @@ import android.util.Patterns
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.loyltworks.myapplication.ui.theme.MyApplicationTheme
 
 class SignupActivity : ComponentActivity() {
 
-    val username = mutableStateOf("")
-    val email = mutableStateOf("")
-    val passwrod = mutableStateOf("")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
+
+            // 🔥 Single source of truth
+            var username by rememberSaveable { mutableStateOf("") }
+            var email by rememberSaveable { mutableStateOf("") }
+            var password by rememberSaveable { mutableStateOf("") }
+
+            var errorMessage by remember { mutableStateOf("") }
+
             MyApplicationTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = colorResource(id = R.color.darkBlack)
+                    modifier = Modifier.fillMaxSize(),
+                    color = colorResource(R.color.darkBlack)
                 ) {
+
                     Column(
                         modifier = Modifier
-                            .padding(20.dp)
                             .fillMaxSize()
+                            .padding(20.dp)
                     ) {
-                        Spacer(modifier = Modifier.height(50.dp))
-                        Row {
-                            Box(contentAlignment = Alignment.Center) {
-                                Image(
-                                    painter = painterResource(R.drawable.back_bg),
-                                    contentDescription = "",
-                                    modifier = Modifier.size(40.dp)
-                                )
-                                Icon(
-                                    imageVector = Icons.Default.KeyboardArrowLeft,
-                                    contentDescription = "",
-                                    modifier = Modifier.size(32.dp),
-                                    tint = Color.White
-                                )
-                            }
-                            Spacer(modifier = Modifier.size(21.dp))
+
+                        Spacer(Modifier.height(40.dp))
+
+                        Text(
+                            text = "Sign Up",
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(R.color.white)
+                        )
+
+                        Spacer(Modifier.height(20.dp))
+
+                        Text(
+                            text = "Create an account for free",
+                            color = colorResource(R.color.white)
+                        )
+
+                        // 🔥 Fields
+                        InputField(
+                            label = "Name",
+                            value = username,
+                            onValueChange = { username = it },
+                            isValid = username.length > 3
+                        )
+
+                        InputField(
+                            label = "Email",
+                            value = email,
+                            onValueChange = { email = it },
+                            isValid = Patterns.EMAIL_ADDRESS.matcher(email).matches(),
+                            keyboardType = KeyboardType.Email
+                        )
+
+                        InputField(
+                            label = "Password",
+                            value = password,
+                            onValueChange = { password = it },
+                            isValid = password.length > 3,
+                            isPassword = true
+                        )
+
+                        Spacer(Modifier.height(20.dp))
+
+                        // 🔴 Error Text
+                        if (errorMessage.isNotEmpty()) {
                             Text(
-                                text = "Sign up",
-                                fontWeight = FontWeight.Bold,
-                                style = TextStyle(
-                                    color = colorResource(R.color.white),
-                                    fontSize = 20.sp
-                                ),
-                                modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                                text = errorMessage,
+                                color = Color.Red
                             )
                         }
-                        Spacer(modifier = Modifier.height(50.dp))
-                        Text(
-                            text = "Create an account for free to get started!",
-                            style = TextStyle(
-                                color = colorResource(R.color.white),
-                                fontSize = 15.sp
-                            ),
-                            fontSize = 15.sp
-                        )
-                        //TextFields
-                        username()
-                        email()
-                        password()
 
-                        //Button
-                        val buttonPressed = remember { mutableStateOf(false) }
-                        Spacer(modifier = Modifier.height(50.dp))
+                        Spacer(Modifier.height(20.dp))
+
+                        // 🔥 Button
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 10.dp, end = 10.dp)
-                                .height(60.dp)
-                                .clip(shape = RoundedCornerShape(10.dp))
+                                .height(55.dp)
                                 .background(
-                                    brush = Brush.horizontalGradient(
+                                    Brush.horizontalGradient(
                                         listOf(
                                             colorResource(R.color.liteBlue),
                                             colorResource(R.color.darkBlue)
                                         )
-                                    )
-                                )
-                                .border(
-                                    width = 0.5.dp,
-                                    color = colorResource(R.color.lightBlack),
+                                    ),
                                     shape = RoundedCornerShape(10.dp)
                                 )
-                                .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onPress = {
-                                            buttonPressed.value = true
-                                        },
-                                        onTap = {
-                                            buttonPressed.value = false
-                                        }
-                                    )
+                                .clickable {
+
+                                    // 🔥 Validation
+                                    errorMessage = when {
+                                        username.isEmpty() -> "Username required"
+                                        username.length < 3 -> "Username too short"
+                                        email.isEmpty() -> "Email required"
+                                        !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> "Invalid email"
+                                        password.isEmpty() -> "Password required"
+                                        password.length < 3 -> "Password too short"
+                                        else -> ""
+                                    }
+
+                                    if (errorMessage.isEmpty()) {
+                                        // ✅ SUCCESS
+                                        println("Signup Success: $username $email $password")
+                                    }
                                 },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                "SIGN UP",
-                                color = colorResource(R.color.white),
+                                text = "SIGN UP",
+                                color = Color.White,
                                 fontWeight = FontWeight.Bold
                             )
                         }
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            HorizontalDivider(
-                                thickness = 2.dp,
-                                color = Color.Gray,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                                    .padding(start = 15.dp)
-                            )
-                            Text(
-                                "OR",
-                                color = colorResource(R.color.white),
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(all = 10.dp)
-                            )
-
-                            HorizontalDivider(
-                                thickness = 2.dp,
-                                color = Color.Gray,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                                    .padding(end = 10.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(
-                                modifier = Modifier
-                                    .padding(all = 10.dp)
-                                    .clip(shape = RoundedCornerShape(10.dp))
-                                    .fillMaxWidth()
-                                    .height(60.dp)
-                                    .weight(1f)
-                                    .background(color = colorResource(R.color.lightBlack))
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color.Gray,
-                                        shape = RoundedCornerShape(10.dp)
-                                    ),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    "G",
-                                    color = colorResource(R.color.white),
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 30.sp
-                                )
-                            }
-
-                            Box(
-                                modifier = Modifier
-                                    .padding(all = 10.dp)
-                                    .clip(shape = RoundedCornerShape(10.dp))
-                                    .fillMaxWidth()
-                                    .height(60.dp)
-                                    .weight(1f)
-                                    .background(color = colorResource(R.color.lightBlack))
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color.Gray,
-                                        shape = RoundedCornerShape(10.dp)
-                                    ),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Image(
-                                    painter = painterResource(R.drawable.twitter),
-                                    contentDescription = "",
-                                    modifier = Modifier.size(40.dp)
-                                )
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Already have an account?",
-                                fontSize = 15.sp,
-                                color = colorResource(R.color.white)
-                            )
-
-                            Text(
-                                text = "Log in",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
-                                color = colorResource(R.color.white)
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun username() {
-        Text(
-            text = "Name",
-            style = TextStyle(
-                color = colorResource(R.color.white),
-                fontSize = 15.sp
-            ),
-            modifier = Modifier.padding(start = 10.dp, top = 24.dp, end = 10.dp)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .padding(start = 10.dp)
-                .background(
-                    color = colorResource(R.color.lightBlack),
-                )
-                .border(
-                    width = 2.dp,
-                    //color = colorResource(R.color.mediumBlack),
-                    shape = RoundedCornerShape(12.dp),
-                    brush = Brush.verticalGradient(
-                        if (username.value.length > 3) listOf(
-                            colorResource(R.color.liteBlue),
-                            colorResource(R.color.darkBlue)
-                        ) else listOf(
-                            colorResource(R.color.mediumBlack),
-                            colorResource(R.color.mediumBlack)
-                        )
-                    )
-                )
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 18.dp)
-                    .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                ) {
-                    if (username.value.isEmpty()) {
-                        Text("Enter User Name", color = Color.Gray)
-                    }
-                    BasicTextField(
-                        value = username.value, onValueChange = {
-                            username.value = it
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = colorResource(R.color.white),
-                        ),
-                        cursorBrush = SolidColor(Color.White),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = {
-
-                            }
-                        )
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clip(shape = RoundedCornerShape(6.dp))
-                        .background(
-                            if (username.value.length > 3) {
-                                Color(R.color.mediumBlack)
-                            } else {
-                                Color.Transparent
-                            }
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (username.value.length > 3) {
-                        Icon(
-                            painter = painterResource(R.drawable.qr),
-                            contentDescription = "",
-                            tint = colorResource(R.color.white),
-                            modifier = Modifier.size(10.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun email() {
-        Text(
-            text = "Email",
-            style = TextStyle(
-                color = colorResource(R.color.white),
-                fontSize = 15.sp
-            ),
-            modifier = Modifier.padding(start = 10.dp, top = 24.dp, end = 10.dp)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .padding(start = 10.dp)
-                .background(
-                    color = colorResource(R.color.lightBlack),
-                )
-                .border(
-                    width = 2.dp,
-                    //color = colorResource(R.color.mediumBlack),
-                    shape = RoundedCornerShape(12.dp),
-                    brush = Brush.verticalGradient(
-                        if (Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) listOf(
-                            colorResource(R.color.liteBlue),
-                            colorResource(R.color.darkBlue)
-                        ) else listOf(
-                            colorResource(R.color.mediumBlack),
-                            colorResource(R.color.mediumBlack)
-                        )
-                    )
-                )
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 18.dp)
-                    .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                ) {
-                    if (email.value.isEmpty()) {
-                        Text("Enter Email", color = Color.Gray)
-                    }
-                    BasicTextField(
-                        value = email.value, onValueChange = {
-                            email.value = it
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = colorResource(R.color.white),
-                        ),
-                        cursorBrush = SolidColor(Color.White),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = {
-
-                            }
-                        )
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clip(shape = RoundedCornerShape(6.dp))
-                        .background(
-                            if (email.value.length > 3) {
-                                Color(R.color.mediumBlack)
-                            } else {
-                                Color.Transparent
-                            }
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (email.value.length > 3) {
-                        Icon(
-                            painter = painterResource(R.drawable.qr),
-                            contentDescription = "",
-                            tint = colorResource(R.color.white),
-                            modifier = Modifier.size(10.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun password() {
-        Text(
-            text = "Password",
-            style = TextStyle(
-                color = colorResource(R.color.white),
-                fontSize = 15.sp
-            ),
-            modifier = Modifier.padding(start = 10.dp, top = 24.dp, end = 10.dp)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .padding(start = 10.dp)
-                .background(
-                    color = colorResource(R.color.lightBlack),
-                )
-                .border(
-                    width = 2.dp,
-                    //color = colorResource(R.color.mediumBlack),
-                    shape = RoundedCornerShape(12.dp),
-                    brush = Brush.verticalGradient(
-                        if (passwrod.value.length > 3) listOf(
-                            colorResource(R.color.liteBlue),
-                            colorResource(R.color.darkBlue)
-                        ) else listOf(
-                            colorResource(R.color.mediumBlack),
-                            colorResource(R.color.mediumBlack)
-                        )
-                    )
-                )
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 18.dp)
-                    .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                ) {
-                    if (passwrod.value.isEmpty()) {
-                        Text("Enter Password", color = Color.Gray)
-                    }
-                    BasicTextField(
-                        value = passwrod.value, onValueChange = {
-                            passwrod.value = it
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = colorResource(R.color.white),
-                        ),
-                        cursorBrush = SolidColor(Color.White),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Go
-                        ),
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardActions = KeyboardActions(
-                            onGo = {
-
-                            }
-                        )
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clip(shape = RoundedCornerShape(6.dp))
-                        .background(
-                            if (passwrod.value.length > 3) {
-                                Color(R.color.mediumBlack)
-                            } else {
-                                Color.Transparent
-                            }
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (passwrod.value.length > 3) {
-                        Icon(
-                            painter = painterResource(R.drawable.qr),
-                            contentDescription = "",
-                            tint = colorResource(R.color.white),
-                            modifier = Modifier.size(10.dp)
-                        )
                     }
                 }
             }
         }
     }
 }
+
+@Composable
+fun InputField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    isValid: Boolean,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isPassword: Boolean = false
+) {
+
+    Text(
+        text = label,
+        color = colorResource(R.color.white),
+        modifier = Modifier.padding(top = 16.dp)
+    )
+
+    Spacer(Modifier.height(6.dp))
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .background(
+                colorResource(R.color.lightBlack),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .border(
+                width = 2.dp,
+                brush = Brush.verticalGradient(
+                    if (isValid) listOf(
+                        colorResource(R.color.liteBlue),
+                        colorResource(R.color.darkBlue)
+                    )
+                    else listOf(
+                        colorResource(R.color.mediumBlack),
+                        colorResource(R.color.mediumBlack)
+                    )
+                ),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .padding(horizontal = 16.dp),
+        contentAlignment = Alignment.CenterStart
+    ) {
+
+        if (value.isEmpty()) {
+            Text(text = "Enter $label", color = Color.Gray)
+        }
+
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            textStyle = TextStyle(
+                color = Color.White,
+                fontSize = 16.sp
+            ),
+            cursorBrush = SolidColor(Color.White),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = ImeAction.Next
+            ),
+            visualTransformation = if (isPassword)
+                PasswordVisualTransformation()
+            else VisualTransformation.None
+        )
+    }
+} 

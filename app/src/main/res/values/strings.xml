@@ -16,4 +16,6 @@
     <string name="title_activity_dialog">DialogActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_navigation2">Navigation2Activity</string>
+    <string name="title_activity_last">LastActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
