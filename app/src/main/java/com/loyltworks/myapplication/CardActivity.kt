@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -27,14 +29,17 @@ class CardActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                   Box{
+                   Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){
                        Card(
                            border = BorderStroke(width = 1.dp, color = Color.Black),
                            elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-                           shape = CircleShape,
-                           modifier = Modifier.fillMaxWidth().height(100.dp).padding(20.dp)
+                           shape = RoundedCornerShape(10.dp),
+                           modifier = Modifier.fillMaxWidth().height(100.dp).padding(20.dp).align(Alignment.Center),
                        ) {
-                           Text("hello")
+                           Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){
+                               Text("hello")
+                           }
+
                        }
                    }
                 }

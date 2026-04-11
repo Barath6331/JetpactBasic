@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".Navigation.Navigation2Activity"
+            android:name=".LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_navigation2"
+            android:label="@string/title_activity_login"
             android:theme="@style/Theme.MyApplication" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".LastActivity"
+            android:exported="true"
+            android:label="@string/title_activity_last"
+            android:theme="@style/Theme.MyApplication"></activity>
+        <activity
+            android:name=".Navigation.Navigation2Activity"
+            android:exported="true"
+            android:label="@string/title_activity_navigation2"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".TestActivity"
             android:exported="true"
             android:label="@string/title_activity_test"
-            android:theme="@style/Theme.MyApplication"></activity>
+            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".dialog.DialogActivity"
             android:exported="true"
@@ -51,22 +61,24 @@
             android:name=".DraggableActivity"
             android:exported="true"
             android:label="@string/title_activity_draggable"
-            android:theme="@style/Theme.MyApplication"></activity>
+            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".SignupActivity"
             android:exported="true"
             android:label="@string/title_activity_card"
-            android:theme="@style/Theme.MyApplication" />
+            android:theme="@style/Theme.MyApplication"></activity>
         <activity
             android:name=".CardActivity"
             android:exported="true"
             android:label="@string/title_activity_card"
-            android:theme="@style/Theme.MyApplication" />
+            android:theme="@style/Theme.MyApplication"></activity>
         <activity
             android:name=".LoginScreenActivity"
             android:exported="true"
             android:label="@string/title_activity_login_screen"
-            android:theme="@style/Theme.MyApplication" />
+            android:theme="@style/Theme.MyApplication">
+
+        </activity>
         <activity
             android:name=".ModifierActivity"
             android:exported="true"
@@ -91,7 +103,7 @@
             android:name=".TextActivity"
             android:exported="true"
             android:label="@string/title_activity_text"
-            android:theme="@style/Theme.MyApplication"></activity>
+            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -101,9 +113,7 @@
             android:name=".navigation_demo.DemoMainActivity"
             android:exported="true"
             android:label="Navigation Demo Home"
-            android:theme="@style/Theme.MyApplication">
-
-        </activity>
+            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".navigation_demo.SecondActivity"
             android:exported="false"
